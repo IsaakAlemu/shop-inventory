@@ -5,7 +5,8 @@ from pydantic_settings import BaseSettings, SettingsConfigDict
 
 class Settings(BaseSettings):
     app_name: str = "Shop Inventory API"
-    debug: bool = True
+    debug: bool = False
+    database_url: str
 
     model_config = SettingsConfigDict(
         env_file=".env",
