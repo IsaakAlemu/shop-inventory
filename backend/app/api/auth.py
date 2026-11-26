@@ -4,7 +4,7 @@ from fastapi import APIRouter, Depends, HTTPException, status
 from sqlalchemy import select
 from sqlalchemy.orm import Session
 
-from app.api.deps import get_current_user, require_owner
+from app.api.deps import get_current_user
 from app.core.database import get_db
 from app.core.security import create_access_token, verify_password
 from app.models.user import User
@@ -38,9 +38,3 @@ def login(payload: LoginRequest, db: Session = Depends(get_db)) -> TokenResponse
 @router.get("/me", response_model=UserOut)
 def get_me(user: User = Depends(get_current_user)) -> User:
     return user
-
-
-# TEMPORARY test endpoint to verify owner access; to be deleted later.
-@router.get("/owner-check", dependencies=[Depends(require_owner)])
-def owner_check() -> dict[str, bool]:
-    return {"ok": True}
