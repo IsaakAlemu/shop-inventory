@@ -1,13 +1,15 @@
-# Initializes the FastAPI application and defines the health check endpoints.
+# Initializes the FastAPI application, registers API routers, and defines health check endpoints.
 
 from fastapi import Depends, FastAPI
 from sqlalchemy import text
 from sqlalchemy.orm import Session
 
+from app.api.auth import router as auth_router
 from app.core.config import settings
 from app.core.database import get_db
 
 app = FastAPI(title=settings.app_name, debug=settings.debug)
+app.include_router(auth_router)
 
 
 @app.get("/health")
